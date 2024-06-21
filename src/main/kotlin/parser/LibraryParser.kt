@@ -1,6 +1,6 @@
 package parser
 
-import LibraryDeclaration
+import dependency.LibraryDeclaration
 import net.swiftzer.semver.SemVer
 
 fun DependencyParser.parseLibraryDeclaration(libraryDeclaration: String): LibraryDeclaration? {

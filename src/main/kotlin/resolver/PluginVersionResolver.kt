@@ -1,6 +1,7 @@
 package resolver
 
-import PluginDeclaration
+import dependency.PluginDeclaration
+
 
 fun ConflictResolver.resolvePluginVersions(): List<PluginDeclaration> {
     plugins.forEach { plugin ->
@@ -29,7 +30,9 @@ private fun ConflictResolver.resolvePlugins(plugins: List<PluginDeclaration>) {
 
 private fun ConflictResolver.resolveHighestVersion(plugins: List<PluginDeclaration>) {
     if (plugins.any { it.version != null }) {
-        val resolvedPlugin = plugins.maxByOrNull { it.version!! }
+        val resolvedPlugin = plugins
+            .filter { it.version != null }
+            .maxByOrNull { it.version!! }
         resolvedPlugins.add(resolvedPlugin!!)
     } else {
         resolvePluginVersion(plugins)
@@ -38,7 +41,9 @@ private fun ConflictResolver.resolveHighestVersion(plugins: List<PluginDeclarati
 
 private fun ConflictResolver.resolveLowestVersion(plugins: List<PluginDeclaration>) {
     if (plugins.any { it.version != null }) {
-        val resolvedPlugin = plugins.minByOrNull { it.version!! }
+        val resolvedPlugin = plugins
+            .filter { it.version != null }
+            .minByOrNull { it.version!! }
         resolvedPlugins.add(resolvedPlugin!!)
     } else {
         resolvePluginVersion(plugins)

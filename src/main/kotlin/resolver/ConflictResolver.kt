@@ -1,10 +1,11 @@
 package resolver
 
-import BundleDeclaration
-import LibraryDeclaration
-import PluginDeclaration
-import VersionDeclaration
-import DependencyNode
+import dependency.BundleDeclaration
+import dependency.DependencyNode
+import dependency.LibraryDeclaration
+import dependency.PluginDeclaration
+import dependency.VersionDeclaration
+
 
 class ConflictResolver(
     private val dependencyNodes: List<DependencyNode>,

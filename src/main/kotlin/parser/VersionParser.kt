@@ -1,6 +1,6 @@
 package parser
 
-import VersionDeclaration
+import dependency.VersionDeclaration
 import net.swiftzer.semver.SemVer
 
 fun DependencyParser.parseVersionDeclaration(versionDeclaration: String): VersionDeclaration? {

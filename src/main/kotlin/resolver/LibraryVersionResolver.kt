@@ -1,6 +1,7 @@
 package resolver
 
-import LibraryDeclaration
+import dependency.LibraryDeclaration
+
 
 fun ConflictResolver.resolveLibraryVersions(): List<LibraryDeclaration> {
     libraries.forEach { library ->
@@ -36,7 +37,9 @@ private fun ConflictResolver.resolveLibraries(libraries: List<LibraryDeclaration
 
 private fun ConflictResolver.resolveHighestVersion(libraries: List<LibraryDeclaration>) {
     if (libraries.any { it.version != null }) {
-        val resolvedLibrary = libraries.maxByOrNull { it.version!! }
+        val resolvedLibrary = libraries
+            .filter { it.version != null }
+            .maxByOrNull { it.version!! }
         resolvedLibraries.add(resolvedLibrary!!)
     } else {
         resolveLibVersion(libraries)
@@ -45,7 +48,9 @@ private fun ConflictResolver.resolveHighestVersion(libraries: List<LibraryDeclar
 
 private fun ConflictResolver.resolveLowestVersion(libraries: List<LibraryDeclaration>): List<LibraryDeclaration> {
     if (libraries.any { it.version != null }) {
-        val resolvedLibrary = libraries.minByOrNull { it.version!! }
+        val resolvedLibrary = libraries
+            .filter { it.version != null }
+            .minByOrNull { it.version!! }
         resolvedLibraries.add(resolvedLibrary!!)
     } else {
         resolveLibVersion(libraries)

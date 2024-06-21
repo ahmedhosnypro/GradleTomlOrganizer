@@ -1,6 +1,7 @@
 package resolver
 
-import BundleDeclaration
+import dependency.BundleDeclaration
+
 
 fun ConflictResolver.resolveConflictBundles() {
     bundles.groupBy { it.name }.forEach { (name, bundles) ->

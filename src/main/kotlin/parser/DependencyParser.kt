@@ -1,11 +1,11 @@
 package parser
 
-import BundleDeclaration
-import CommentNode
-import DependencyNode
-import LibraryDeclaration
-import PluginDeclaration
-import VersionDeclaration
+import dependency.BundleDeclaration
+import dependency.CommentNode
+import dependency.DependencyNode
+import dependency.LibraryDeclaration
+import dependency.PluginDeclaration
+import dependency.VersionDeclaration
 import java.io.File
 
 class DependencyParser(

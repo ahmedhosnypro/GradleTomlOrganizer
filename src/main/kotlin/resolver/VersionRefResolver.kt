@@ -1,6 +1,7 @@
 package resolver
 
-import VersionDeclaration
+import dependency.VersionDeclaration
+
 
 fun ConflictResolver.resolveVersionRefVersions(): List<VersionDeclaration> {
     versionRefs.groupBy { it.name }.forEach { (_, versions) ->

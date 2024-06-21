@@ -3,9 +3,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Test
 import parser.*
 import resolver.ConflictResolver
-import resolver.resolveLibraryVersions
-import resolver.resolvePluginVersions
-import resolver.resolveVersionRefVersions
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 

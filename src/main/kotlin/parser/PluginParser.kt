@@ -1,6 +1,6 @@
 package parser
 
-import PluginDeclaration
+import dependency.PluginDeclaration
 import net.swiftzer.semver.SemVer
 
 fun DependencyParser.parsePluginDeclaration(pluginDeclaration: String): PluginDeclaration? {

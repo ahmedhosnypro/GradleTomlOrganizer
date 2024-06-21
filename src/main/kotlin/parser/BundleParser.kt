@@ -1,6 +1,7 @@
 package parser
 
-import BundleDeclaration
+import dependency.BundleDeclaration
+
 
 fun DependencyParser.parseBundleDeclaration(bundleDeclaration: String): BundleDeclaration? {
     return parseBundleDeclarationOrNull(bundleDeclaration) ?: if (strictMode) {
