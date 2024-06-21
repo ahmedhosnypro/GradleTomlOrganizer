@@ -1,0 +1,55 @@
+# This is a comment
+[versions]
+lib-module-version-ref= "1.0.0"
+
+libraryWithDirectVersion = "2.5.4-beta"
+
+lib-group-name-version-ref = "1.2.3"
+
+plugin-id-version-ref
+= "0.1.0"
+
+libraryWithMissingVersion =
+
+
+[libraries]
+lib-module-version-ref = { module = "group.one:name.one",
+version.ref = "lib-module-version-ref" }
+lib-module-version = { module = "group.one:name.one", version = "1.2.3" }
+
+lib-group-name-version-ref = { group = "group.two", name = "name.two", version.ref = "lib-group-name-version-ref" }
+lib-group-name-version = { group = "group.two", name = "name.two", version = "1.2.3" }
+lib-group-name = { group = "group", name = "name" }
+
+lib-version-invalid-no-module-or-group-name = { version = "0.0.1" }
+lib-module-invalid-no-version = { module = "group:name" }
+lib-invalid-missing-close-bracket = { module = "group:name", version = "1.2.3"
+lib-invalid-use-brackets = (group = "group", name = "name", version = "1.2.3")
+lib-invalid-use-square-brackets = [group = "group", name = "name", version = "1.2.3"]
+lib-invalid-empty = { }
+lib-invalid-line-one
+lib-invalid-line-two =
+lib-invalid-line-three = []
+lib-invalid-line-four = ()
+
+[bundles]
+Bundle = [ "lib-module-version-ref", "lib-module-version", "lib-group-name-version-ref", "ib-group-name-version" ]
+multilineBundle = [
+"lib-module-version-ref",
+"lib-module-version",
+"lib-group-name-version-ref",
+"ib-group-name-version",
+]
+invalidBundle-missingClosingBracket = [// Missing closing bracket
+
+[plugins]
+plugin-id-version-ref = { id = "plugin.id",
+    version.ref = "plugin-id-version-ref" }
+plugin-id-version = { id = "plugin.id", version = "0.1.0" }
+
+plugin-id-invalid-no-version = { id = "plugin.id" }
+plugin-version-invalid-no-id = { version = "0.0.1" }
+plugin-invalid-empty = { }
+
+# Undefined line (should produce a warning)
+This is not a valid declaration
