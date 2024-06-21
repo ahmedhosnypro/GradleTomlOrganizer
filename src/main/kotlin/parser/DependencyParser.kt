@@ -1,13 +1,30 @@
 package parser
 
+import BundleDeclaration
 import CommentNode
 import DependencyNode
+import LibraryDeclaration
+import PluginDeclaration
+import VersionDeclaration
 import java.io.File
 
 class DependencyParser(
     val strictMode: Boolean = false,
 ) {
+    val dependencyNodes = mutableListOf<DependencyNode>()
     private lateinit var dependencySections: DependencySections
+
+    val versionRefs: List<VersionDeclaration>
+        get() = dependencyNodes.filterIsInstance<VersionDeclaration>()
+
+    val libraries: List<LibraryDeclaration>
+        get() = dependencyNodes.filterIsInstance<LibraryDeclaration>()
+
+    val bundles: List<BundleDeclaration>
+        get() = dependencyNodes.filterIsInstance<BundleDeclaration>()
+
+    val plugins: List<PluginDeclaration>
+        get() = dependencyNodes.filterIsInstance<PluginDeclaration>()
 
     fun parseFileDependencies(inputFilePath: String): List<DependencyNode> {
         val file = File(inputFilePath)
@@ -23,7 +40,7 @@ class DependencyParser(
     fun parseDependencies(input: String): List<DependencyNode> {
         dependencySections = parseSections(input)
 
-        val dependencyNodes = mutableListOf<DependencyNode>()
+
         dependencyNodes.addAll(dependencySections.versions.mapNotNull { parseVersionDeclaration(it) })
         dependencyNodes.addAll(dependencySections.libraries.mapNotNull { parseLibraryDeclaration(it) })
         dependencyNodes.addAll(dependencySections.bundles.mapNotNull { parseBundleDeclaration(it) })
