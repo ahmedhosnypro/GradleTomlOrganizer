@@ -6,12 +6,13 @@ import PluginDeclaration
 import VersionDeclaration
 import DependencyNode
 
-class VersionResolver(
+class ConflictResolver(
     private val dependencyNodes: List<DependencyNode>,
     val versionResolutionStrategy: VersionResolutionStrategy = VersionResolutionStrategy.HIGHEST_VERSION,
     // todo: implement version resolution channel
     private val versionResolutionChannel: VersionResolutionChannel = VersionResolutionChannel.RELEASE
 ) {
+
     val versionRefs: List<VersionDeclaration>
         get() = dependencyNodes.filterIsInstance<VersionDeclaration>()
 
@@ -28,4 +29,11 @@ class VersionResolver(
     val resolvedLibraries = mutableListOf<LibraryDeclaration>()
     val resolvedBundles = mutableListOf<BundleDeclaration>()
     val resolvedPlugins = mutableListOf<PluginDeclaration>()
+
+    init {
+        resolveVersionRefVersions()
+        resolveLibraryVersions()
+        resolveConflictBundles()
+        resolvePluginVersions()
+    }
 }

@@ -17,7 +17,7 @@ data class LibraryDeclaration(
     var nameProp: String? = null
 ) : DependencyNode()
 
-data class BundleDeclaration(val name: String, val dependencies: List<String>) : DependencyNode()
+data class BundleDeclaration(val name: String, val libraries: List<String>) : DependencyNode()
 data class PluginDeclaration(
     val name: String,
     val id: String,

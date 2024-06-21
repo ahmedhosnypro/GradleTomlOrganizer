@@ -2,7 +2,7 @@ import net.swiftzer.semver.SemVer
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import parser.*
-import resolver.VersionResolver
+import resolver.ConflictResolver
 import resolver.resolveLibraryVersions
 import resolver.resolvePluginVersions
 import resolver.resolveVersionRefVersions
@@ -151,7 +151,7 @@ class DependencyParserTest {
             globalParser.parseBundleDeclaration("""Bundle = [ "lib-module-version-ref", "lib-module-version", "lib-group-name-version-ref", "ib-group-name-version" ]""")
         assert(validBundle?.name == "Bundle")
         assert(
-            validBundle?.dependencies == listOf(
+            validBundle?.libraries == listOf(
                 "lib-module-version-ref",
                 "lib-module-version",
                 "lib-group-name-version-ref",
@@ -172,7 +172,7 @@ class DependencyParserTest {
         )
         assert(validBundle?.name == "multilineBundle")
         assert(
-            validBundle?.dependencies == listOf(
+            validBundle?.libraries == listOf(
                 "lib-module-version-ref",
                 "lib-module-version",
                 "lib-group-name-version-ref",
@@ -302,13 +302,13 @@ class DependencyParserTest {
             "ib-group-name-version"
         )
         val bundle1 = bundles.find { it.name == "Bundle" }
-        assert(bundle1?.dependencies?.size == 4)
-        bundle1?.dependencies?.containsAll(bundleDependencyList)?.let { assert(it) }
+        assert(bundle1?.libraries?.size == 4)
+        bundle1?.libraries?.containsAll(bundleDependencyList)?.let { assert(it) }
 
 
         val bundle2 = bundles.find { it.name == "multilineBundle" }
-        assert(bundle2?.dependencies?.size == 4)
-        bundle2?.dependencies?.containsAll(bundleDependencyList)?.let { assert(it) }
+        assert(bundle2?.libraries?.size == 4)
+        bundle2?.libraries?.containsAll(bundleDependencyList)?.let { assert(it) }
 
         // Assertions for Plugin Declarations
         val plugins = parser.plugins
@@ -348,10 +348,12 @@ class DependencyParserTest {
     fun testLibraryVersionResolver() {
         val parser = DependencyParser()
         parser.parseDependencies(testInput)
-        val resolver = VersionResolver(parser.dependencyNodes)
-        resolver.resolveLibraryVersions()
-        resolver.resolvePluginVersions()
-        resolver.resolveVersionRefVersions()
+        val resolver = ConflictResolver(parser.dependencyNodes)
+        assert(resolver.resolvedVersions.size == 4)
+        assert(resolver.resolvedLibraries.size == 3)
+        assert(resolver.resolvedBundles.size == 2)
+        assert(resolver.resolvedPlugins.size == 1)
+
     }
 
     // Helper function to capture standard output

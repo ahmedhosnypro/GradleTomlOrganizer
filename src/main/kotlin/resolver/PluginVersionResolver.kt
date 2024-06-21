@@ -2,7 +2,7 @@ package resolver
 
 import PluginDeclaration
 
-fun VersionResolver.resolvePluginVersions(): List<PluginDeclaration> {
+fun ConflictResolver.resolvePluginVersions(): List<PluginDeclaration> {
     plugins.forEach { plugin ->
         if (plugin.versionRef != null && plugin.version == null) {
             val versionRef = versionRefs.find { version ->
@@ -20,14 +20,14 @@ fun VersionResolver.resolvePluginVersions(): List<PluginDeclaration> {
     return resolvedPlugins
 }
 
-private fun VersionResolver.resolvePlugins(plugins: List<PluginDeclaration>) {
+private fun ConflictResolver.resolvePlugins(plugins: List<PluginDeclaration>) {
     when (versionResolutionStrategy) {
         VersionResolutionStrategy.HIGHEST_VERSION -> resolveHighestVersion(plugins)
         VersionResolutionStrategy.LOWEST_VERSION -> resolveLowestVersion(plugins)
     }
 }
 
-private fun VersionResolver.resolveHighestVersion(plugins: List<PluginDeclaration>) {
+private fun ConflictResolver.resolveHighestVersion(plugins: List<PluginDeclaration>) {
     if (plugins.any { it.version != null }) {
         val resolvedPlugin = plugins.maxByOrNull { it.version!! }
         resolvedPlugins.add(resolvedPlugin!!)
@@ -36,7 +36,7 @@ private fun VersionResolver.resolveHighestVersion(plugins: List<PluginDeclaratio
     }
 }
 
-private fun VersionResolver.resolveLowestVersion(plugins: List<PluginDeclaration>) {
+private fun ConflictResolver.resolveLowestVersion(plugins: List<PluginDeclaration>) {
     if (plugins.any { it.version != null }) {
         val resolvedPlugin = plugins.minByOrNull { it.version!! }
         resolvedPlugins.add(resolvedPlugin!!)
@@ -45,7 +45,7 @@ private fun VersionResolver.resolveLowestVersion(plugins: List<PluginDeclaration
     }
 }
 
-private fun VersionResolver.resolvePluginVersion(plugins: List<PluginDeclaration>) {
+private fun ConflictResolver.resolvePluginVersion(plugins: List<PluginDeclaration>) {
     val plugin = plugins[0]
     resolvedPlugins.add(
         PluginDeclaration(

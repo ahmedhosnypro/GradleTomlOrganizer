@@ -2,7 +2,7 @@ package resolver
 
 import LibraryDeclaration
 
-fun VersionResolver.resolveLibraryVersions(): List<LibraryDeclaration> {
+fun ConflictResolver.resolveLibraryVersions(): List<LibraryDeclaration> {
     libraries.forEach { library ->
         if (library.versionRef != null && library.version == null) {
             val versionRef = versionRefs.find { version ->
@@ -27,14 +27,14 @@ fun VersionResolver.resolveLibraryVersions(): List<LibraryDeclaration> {
     return resolvedLibraries
 }
 
-private fun VersionResolver.resolveLibraries(libraries: List<LibraryDeclaration>) {
+private fun ConflictResolver.resolveLibraries(libraries: List<LibraryDeclaration>) {
     when (versionResolutionStrategy) {
         VersionResolutionStrategy.HIGHEST_VERSION -> resolveHighestVersion(libraries)
         VersionResolutionStrategy.LOWEST_VERSION -> resolveLowestVersion(libraries)
     }
 }
 
-private fun VersionResolver.resolveHighestVersion(libraries: List<LibraryDeclaration>) {
+private fun ConflictResolver.resolveHighestVersion(libraries: List<LibraryDeclaration>) {
     if (libraries.any { it.version != null }) {
         val resolvedLibrary = libraries.maxByOrNull { it.version!! }
         resolvedLibraries.add(resolvedLibrary!!)
@@ -43,7 +43,7 @@ private fun VersionResolver.resolveHighestVersion(libraries: List<LibraryDeclara
     }
 }
 
-private fun VersionResolver.resolveLowestVersion(libraries: List<LibraryDeclaration>): List<LibraryDeclaration> {
+private fun ConflictResolver.resolveLowestVersion(libraries: List<LibraryDeclaration>): List<LibraryDeclaration> {
     if (libraries.any { it.version != null }) {
         val resolvedLibrary = libraries.minByOrNull { it.version!! }
         resolvedLibraries.add(resolvedLibrary!!)
@@ -53,7 +53,7 @@ private fun VersionResolver.resolveLowestVersion(libraries: List<LibraryDeclarat
     return resolvedLibraries
 }
 
-private fun VersionResolver.resolveLibVersion(libraries: List<LibraryDeclaration>) {
+private fun ConflictResolver.resolveLibVersion(libraries: List<LibraryDeclaration>) {
     val lib = libraries.firstOrNull { it.module != null && it.versionRef != null }
         ?: libraries.firstOrNull { it.group != null && it.name != null && it.versionRef != null }
         ?: libraries.firstOrNull { it.group != null && it.name != null }
