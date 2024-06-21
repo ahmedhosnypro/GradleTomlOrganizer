@@ -43,3 +43,4 @@ bin/
 
 /.idea/
 /local.properties
+/output/libs.versions.toml

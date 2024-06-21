@@ -1,4 +1,4 @@
-## Developing a Production-Grade Kotlin Script for Dependency Optimization
+## Developing a Production-Grade Kotlin Script for dependency Optimization
 
 Create a robust, extensible Kotlin script for optimizing dependency files, suitable for production environments and complex scenarios.
 
